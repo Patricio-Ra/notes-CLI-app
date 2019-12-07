@@ -1,0 +1,25 @@
+{
+  "name": "notes2-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Patricio-Ra/notes2-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Patricio-Ra/notes2-app/issues"
+  },
+  "homepage": "https://github.com/Patricio-Ra/notes2-app#readme",
+  "dependencies": {
+    "@types/node": "^12.12.14",
+    "@types/validator": "^12.0.1",
+    "chalk": "^2.4.1",
+    "validator": "^10.8.0"
+  }
+}
