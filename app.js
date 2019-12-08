@@ -1,6 +1,6 @@
 const chalk = require('chalk');
 const yargs = require('yargs');
-const getNotes = require('./notes.js');
+const notes = require('./notes.js');
 
 // Customize version.
 yargs.version('1.1.0');
@@ -22,8 +22,7 @@ yargs.command({
         }
     },
     handler: (argv) => {
-        console.log(chalk.green.bold('Title: '), chalk.green(argv.title));
-        console.log(chalk.green.bold('Body: '), chalk.green(argv.body));
+        notes.addNote(argv.title, argv.body);
     }
 });
 
