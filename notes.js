@@ -7,14 +7,15 @@ const validator = require('validator');
 const getNotes = () => 'Your notes...';
 
 const addNote = (title, body) => {
+    if (title.trim() === '') {
+        return console.log(chalk.red('Error: Note Title cannot be empty.'));
+    };
+
     const notes = loadNotes();
     const duplicateNotes = notes.some(note => note.title.toLowerCase() === title.toLowerCase());
 
     if (duplicateNotes) {
         return console.log(chalk.red('Error: Note already exist.'));
-    };
-    if (title.trim() === '') {
-        return console.log(chalk.red('Error: Note Title cannot be empty.'));
     };
 
     notes.push({
@@ -23,6 +24,23 @@ const addNote = (title, body) => {
     });
     saveNotes(notes);
     console.log(chalk.green('New note added.'));
+};
+
+const removeNote = (title) => {
+    if (title.trim() === '') {
+        return console.log(chalk.red('Error: Note Title cannot be empty.'));
+    };
+
+    const notes = loadNotes();
+    const noteIndex = notes.findIndex(note => note.title.toLowerCase() === title.toLowerCase());
+
+    if (noteIndex !== -1) {
+        notes.splice(noteIndex, 1);
+        saveNotes(notes);
+        console.log(chalk.green(`Note '${title}' deleted.`));
+    } else {
+        console.log(chalk.red(`Note '${title}' not found.`));
+    };
 };
 
 
@@ -45,5 +63,6 @@ const saveNotes = (notes) => {
 
 module.exports = {
     getNotes,
-    addNote, 
+    addNote,
+    removeNote,
 };
