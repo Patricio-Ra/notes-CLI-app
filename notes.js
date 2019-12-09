@@ -4,17 +4,14 @@ const validator = require('validator');
 
 
 // Exports.
-const getNotes = () => 'Your notes...';
-
 const addNote = (title, body) => {
     if (title.trim() === '') {
         return console.log(chalk.red('Error: Note Title cannot be empty.'));
     };
 
     const notes = loadNotes();
-    const duplicateNotes = notes.some(note => note.title.toLowerCase() === title.toLowerCase());
 
-    if (duplicateNotes) {
+    if (matchByTitle(notes, title)) {
         return console.log(chalk.red('Error: Note already exist.'));
     };
 
@@ -43,6 +40,32 @@ const removeNote = (title) => {
     };
 };
 
+const listNotes = () => {
+    const notes = loadNotes();
+
+    console.log(chalk.blue('Your notes: '));
+    for (const note of notes) {
+        console.log(`- ${note.title}`);
+    };
+};
+
+const readNote = (title) => {
+    if (title.trim() === '') {
+        return console.log(chalk.red('Error: Note Title cannot be empty.'));
+    };
+
+    const notes = loadNotes();
+    const note = matchByTitle(notes, title);
+
+    if (note) {
+        console.log(chalk.blue(note.title));
+        console.log(note.body);
+    } else {
+        console.log(chalk.red('Note not found.'));
+    };
+
+};
+
 
 // Private methods.
 const loadNotes = () => {
@@ -52,17 +75,19 @@ const loadNotes = () => {
         return JSON.parse(dataJSON);
     } catch (e) {
         return [];
-    }
+    };
 };
 
 const saveNotes = (notes) => {
     const dataJSON = JSON.stringify(notes);
     fs.writeFileSync('notes.json', dataJSON);
-}
+};
 
+const matchByTitle = (notes, title) => notes.find(note => note.title.toLowerCase() === title.toLowerCase());
 
 module.exports = {
-    getNotes,
     addNote,
     removeNote,
+    listNotes,
+    readNote
 };
